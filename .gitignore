@@ -1,0 +1,11 @@
+# Emacs
+*~
+
+# Python
+env
+
+# Jupyter
+.ipynb_checkpoints
+
+# PlatformIO
+.pio
