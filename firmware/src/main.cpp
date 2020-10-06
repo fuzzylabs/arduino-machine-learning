@@ -25,7 +25,7 @@ void setup() {
   // }
 }
 
-int angle = 0.0;
+int angle = 0;
 
 void loop() {
   for (int i = 0; i < 3; i++) {
@@ -58,13 +58,10 @@ void loop() {
   // Allocate tensors
   interpreter.AllocateTensors();
 
+  // Provide an input
   TfLiteTensor* input = interpreter.input(0);
-  Serial.printf("Input size %d\n", input->dims->size);
-  Serial.printf("Input %d %d\n", input->dims->data[0], input->dims->data[1]);
-
-  // Provide an example input
-  input->data.f[0] = angle * 3.14/180;
-  Serial.printf("Input became %d %d\n", input->dims->data[0], input->dims->data[1]);
+  input->data.f[0] = angle;// * 3.14/180;
+  Serial.printf("Input became %f\n", input->data.f[0]);
 
   // Invoke model with input
   TfLiteStatus invoke_status = interpreter.Invoke();
@@ -77,10 +74,8 @@ void loop() {
   // Obtain output
   TfLiteTensor* output = interpreter.output(0);
 
-  
-  //Serial.printf("Output: size %d; v0 %d; v1 %d\n", output->dims->size, output->dims->data[0], output->dims->data[1]);
   Serial.printf("Output size %d\n", output->dims->size);
-  Serial.printf("Output %d %d\n", output->dims->data[0], output->dims->data[1]);
+  Serial.printf("Output %f\n", output->data.f[0]);
   Serial.printf("\n");
 
   delay(1000);
